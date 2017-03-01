@@ -1,0 +1,5 @@
+site_name: "RAM System Developer's Guide"
+pages:
+  - Home: index.md
+  - Network messages: networking.md
+theme: readthedocs
