@@ -245,3 +245,5 @@ list is length 0 or `null`.
 * Vocalization states may incorporate voice recognition in the future for some
   tasks.
 * `SYNC` messages should be modified to be consistent between host and task.
+* For sharing between host and task computers, it would be nice if there is a
+  common library that defines these message types.
