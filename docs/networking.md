@@ -233,6 +233,17 @@ to send this message after the experiment type is known by the host. A list of
 lures is sent only for experiment types requiring them, otherwise the `lures`
 list is length 0 or `null`.
 
+## Message sequence
+
+1. Task started, waits for `CONNECTED`
+2. Host sends `CONNECTED`
+3. Task sends `EXPNAME`, `VERSION`, `SESSION`, `SUBJECTID`
+4. If required, task sends `WORDPOOL`, waits for `WORDPOOL` response
+5. Task sends `READY`, waits for `START`
+6. Host sends `START`
+7. Task starts, sending `STATE` and other messages as appropriate
+8. Science happens
+
 ## Notes for future changes
 
 * All `data` parameters should in the nuture be `null` or an object/dict.
