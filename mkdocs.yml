@@ -2,6 +2,7 @@ site_name: "RAM System Developer's Guide"
 pages:
   - Home: index.md
   - Task laptop: task-laptop.md
+  - Data format and storage: data.md
   - Network messages: networking.md
 theme: readthedocs
 markdown_extensions:
