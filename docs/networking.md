@@ -140,10 +140,22 @@ more detail below.
 {
   "data": {
     "name": "STATETYPE",
-    "value": true
+    "value": true,
+    "meta": {}
   }
 }
 ```
+
+The `meta` object can store whatever else and is meant to be backwards- and
+forwards-compatible. For PS4/x experiments, `meta` looks like:
+
+```json
+{
+  "phase_type": "<string>"
+}
+```
+
+where `phase_type` is one of `BASELINE`, `PS`, `STIM`, or `NON-STIM`.
 
 #### State messages
 
