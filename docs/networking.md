@@ -37,6 +37,27 @@ and `aux` are listed (assumed `null` when omitted).
 
 ## To-host message types
 
+###  `SESSION`
+
+Transmits session information.
+
+```json
+{
+  "data": {
+    "name": "PS4_FR5",
+    "version": "5.0.0",
+    "subject": "subject ID",
+    "session_number": 0
+  }
+}
+```
+
+!!! note
+
+    Only `session_number` is used by the host PC now. This is because previous
+    experiment versions used separate messages for each piece of data. These
+    still need to be sent separately until all experiments can be updated.
+
 ### `EXPNAME`
 
 Transmits current experiment name to ensure no mismatch.
@@ -46,6 +67,11 @@ Transmits current experiment name to ensure no mismatch.
   "data": "name of experiment e.g., FR1"
 }
 ```
+
+!!! warning
+
+    This message will be deprecated with its contents sent in `SESSION`
+    messages.
 
 ### `VERSION`
 
@@ -57,15 +83,10 @@ Transmits task version number.
 }
 ```
 
-###  `SESSION`
+!!! warning
 
-Transmits session information.
-
-```json
-{
-  "data": {"session_number": <int>}
-}
-```
+    This message will be deprecated with its contents sent in `SESSION`
+    messages.
 
 ###  `SUBJECTID`
 
@@ -76,6 +97,11 @@ Transmits the subject's ID.
   "data": "subject ID"
 }
 ```
+
+!!! warning
+
+    This message will be deprecated with its contents sent in `SESSION`
+    messages.
 
 ### `DEFINE`
 
