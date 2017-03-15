@@ -206,38 +206,6 @@ Used for clock synchronization/network latency testing.
 The `aux` field keeps track of the order of sent `SYNC` messages (indicated in
 the `num` field from the host).
 
-### `WORDPOOL`
-
-Request or receive a pool of words for a session. From the task laptop to the
-host PC:
-
-```json
-{
-  "data": {
-    "session": 0
-  }
-}
-```
-
-From the host PC to the task laptop:
-
-```json
-{
-  "data": {
-    "session": 0,
-    "lists": [
-      [<list 0>], [<list 1>], ..., [<list n-1>]
-    ],
-    "lures": null
-  }
-}
-```
-
-Logic for word pool creation is delegated to the host PC, thus it is only valid
-to send this message after the experiment type is known by the host. A list of
-lures is sent only for experiment types requiring them, otherwise the `lures`
-list is length 0 or `null`.
-
 ## Message sequence
 
 1. Task started, waits for `CONNECTED`
