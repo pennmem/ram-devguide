@@ -1,7 +1,7 @@
 # Network messages
 
 The task and host computers communicate via JSON messages over a [ZeroMQ][]
-`PAIR` socket. Messages have the following format:
+`PAIR` socket on TCP port 8889. Messages have the following format:
 
 ```json
 {
@@ -257,3 +257,13 @@ the `num` field from the host).
 * `SYNC` messages should be modified to be consistent between host and task.
 * For sharing between host and task computers, it would be nice if there is a
   common library that defines these message types.
+
+## Helpful notes
+
+During development of the tasks, crashes can sometimes leave zombie processes
+alive that prevent re-binding the socket. On Mac, the PID can be found with the
+following command:
+
+```
+losf -i tcp:8889
+```
