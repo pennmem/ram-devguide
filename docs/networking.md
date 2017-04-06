@@ -265,5 +265,5 @@ alive that prevent re-binding the socket. On Mac, the PID can be found with the
 following command:
 
 ```
-losf -i tcp:8889
+lsof -i tcp:8889
 ```
