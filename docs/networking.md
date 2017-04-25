@@ -219,6 +219,22 @@ Used to ensure that each end is still responsive.
 
 Handshake message when the connection is established
 
+### `STIM`
+
+Sent whenever the host PC applies stimulation pulses.
+
+```json
+{
+  "data": {
+    "EXPNAME": "experiment name",
+    "stim_electrode_pair": "string of labels",
+    "stim_frequency": <frequency in mHz>,
+    "stim_amplitude": <amplitude in uA>,
+    "stim_duration": <duration in ms>
+  }
+}
+```
+
 ### `SYNC`
 
 Used for clock synchronization/network latency testing.
