@@ -115,7 +115,8 @@ Not used? Sends list of possible states in the experiment.
 
 ### `READY`
 
-Indicates that the task laptop is awaiting a `START` message.
+Indicates that the task laptop is awaiting a `START` message. This is not used
+in System 3.
 
 ### `ALIGNCLOCK`
 
