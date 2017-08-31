@@ -7,16 +7,14 @@ The task and host computers communicate via JSON messages over a [ZeroMQ][]
 {
   "type": "MESSAGETYPE",
   "data": <>,
-  "aux": <>,
   "time": 1234.5678
 }
 ```
 
 where `type` is the type of message, `data` contains parameters or metadata
-related to the specific type of message, `aux` may be used for secondary data,
-and `time` is a timestamp in milliseconds since the epoch. Only `type` is
-strictly required, though generally speaking, messages should include a
-timestamp and explicitly include `data` and `auxdata` as `null`.
+related to the specific type of message, and `time` is a timestamp in 
+milliseconds since the epoch. Only `type` is strictly required, though 
+generally speaking, messages should at least include a timestamp as well.
 
 Message types fall generally into three categories:
 
@@ -31,7 +29,7 @@ Message types fall generally into three categories:
    connection is still alive, and others.
 
 In the following, message types are described and expected values for `data`
-and `aux` are listed (assumed `null` when omitted).
+are listed (assumed `null` when omitted).
 
 [ZeroMQ]: http://zeromq.org/
 
@@ -51,72 +49,6 @@ Transmits session information.
   }
 }
 ```
-
-!!! note
-
-    Only `session_number` is used by the host PC now. This is because previous
-    experiment versions used separate messages for each piece of data. These
-    still need to be sent separately until all experiments can be updated.
-
-### `EXPNAME`
-
-Transmits current experiment name to ensure no mismatch.
-
-```json
-{
-  "data": "name of experiment e.g., FR1"
-}
-```
-
-!!! warning
-
-    This message will be deprecated with its contents sent in `SESSION`
-    messages.
-
-### `VERSION`
-
-Transmits task version number.
-
-```json
-{
-  "data": "version number in format x.y.z"
-}
-```
-
-!!! warning
-
-    This message will be deprecated with its contents sent in `SESSION`
-    messages.
-
-###  `SUBJECTID`
-
-Transmits the subject's ID.
-
-```json
-{
-  "data": "subject ID"
-}
-```
-
-!!! warning
-
-    This message will be deprecated with its contents sent in `SESSION`
-    messages.
-
-### `DEFINE`
-
-Not used? Sends list of possible states in the experiment.
-
-```json
-{
-  "data": ["<list of states>"]
-}
-```
-
-### `READY`
-
-Indicates that the task laptop is awaiting a `START` message. This is not used
-in System 3.
 
 ### `ALIGNCLOCK`
 
@@ -210,12 +142,6 @@ Ready to start the experiment.
 
 Used to ensure that each end is still responsive.
 
-```json
-{
-  "data": <integer, interval in ms that heartbeat is sent>
-}
-```
-
 ### `CONNECTED`
 
 Handshake message when the connection is established
@@ -251,23 +177,15 @@ the `num` field from the host).
 
 ## Message sequence
 
-1. Task started, waits for `CONNECTED`
-2. Host sends `CONNECTED`
-3. Task sends `EXPNAME`, `VERSION`, `SESSION`, `SUBJECTID`
-4. If required, task sends `WORDPOOL`, waits for `WORDPOOL` response
-5. Task sends `READY`, waits for `START`
-6. Host sends `START`
-7. Task starts, sending `STATE` and other messages as appropriate
-8. Science happens
+1. Task sends `SESSION`
+2. If required, task sends `WORDPOOL`, waits for `WORDPOOL` response
+3. Host sends `START`
+4. Task sends `TRIAL`
+5. Task starts, sending `STATE` and other messages as appropriate
+6. Science happens
 
 ## Notes for future changes
 
-* All `data` parameters should in the nuture be `null` or an object/dict.
-* Unused messages will be deprecated and eliminated.
-* `EXPNAME`, `VERSION`, `SESSION`, and `SUBJECTID` should be combined. Possibly
-  also `WORDPOOL`.
-* The `aux` field should be removed; all data can be carried in the `data`
-  field.
 * Deprecated state types will be removed.
 * Vocalization states may incorporate voice recognition in the future for some
   tasks.
