@@ -177,12 +177,16 @@ the `num` field from the host).
 
 ## Message sequence
 
-1. Task sends `SESSION`
-2. If required, task sends `WORDPOOL`, waits for `WORDPOOL` response
+1. Task waits for `CONNECTED` then sends it back to the host
+2. Task sends `SESSION`, waits for `START` from host
 3. Host sends `START`
 4. Task sends `TRIAL`
 5. Task starts, sending `STATE` and other messages as appropriate
 6. Science happens
+
+Note that once the host has received `CONNECTED`, it will process *any* message
+sent by the task laptop. It is **imperative** that the task laptop wait for a
+`START` message before the experiment is allowed to proceed.
 
 ## Notes for future changes
 
