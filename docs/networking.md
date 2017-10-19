@@ -12,8 +12,8 @@ The task and host computers communicate via JSON messages over a [ZeroMQ][]
 ```
 
 where `type` is the type of message, `data` contains parameters or metadata
-related to the specific type of message, and `time` is a timestamp in 
-milliseconds since the epoch. Only `type` is strictly required, though 
+related to the specific type of message, and `time` is a timestamp in
+milliseconds since the epoch. Only `type` is strictly required, though
 generally speaking, messages should at least include a timestamp as well.
 
 Message types fall generally into three categories:
@@ -49,6 +49,11 @@ Transmits session information.
   }
 }
 ```
+
+### `READY`
+
+Indicates that the task is ready to start when the host PC is. This should be
+sent *after* `SESSION`.
 
 ### `ALIGNCLOCK`
 
@@ -144,7 +149,8 @@ Used to ensure that each end is still responsive.
 
 ### `CONNECTED`
 
-Handshake message when the connection is established
+Message sent by Ramulator to attempt connection to the task laptop. This is
+currently ignored when received by Ramulator as of version 3.3.0.
 
 ### `STIM`
 
@@ -177,16 +183,16 @@ the `num` field from the host).
 
 ## Message sequence
 
-1. Task waits for `CONNECTED` then sends it back to the host
-2. Task sends `SESSION`, waits for `START` from host
+1. Task waits for `CONNECTED`
+2. Task sends `SESSION`, then sends `READY` and waits for `START` from host
 3. Host sends `START`
 4. Task sends `TRIAL`
 5. Task starts, sending `STATE` and other messages as appropriate
 6. Science happens
 
-Note that once the host has received `CONNECTED`, it will process *any* message
-sent by the task laptop. It is **imperative** that the task laptop wait for a
-`START` message before the experiment is allowed to proceed.
+As of version 3.3.0, Ramulator will error if it receives state messages before
+receiving `READY` from the task laptop. This is to prevent acting on messages
+sent in the middle of a session.
 
 ## Notes for future changes
 
